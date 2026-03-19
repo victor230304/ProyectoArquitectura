@@ -4,7 +4,8 @@ from django.shortcuts import render, get_object_or_404
 import json
 
 from .models import Cliente, Coche, Servicio, CocheServicio
-
+from django.shortcuts import render, redirect
+from .forms import ClienteForm, CocheForm, ServicioForm, CocheServicioForm
 
 def menu_principal(request):
     return render(request, 'menuprincipal.html')
@@ -19,9 +20,12 @@ def lista_coches(request):
     coches = Coche.objects.select_related('cliente').all()
     return render(request, 'lista_coche.html', {'coches': coches})
 
-
 def lista_servicios(request):
-    relaciones = CocheServicio.objects.select_related('servicio', 'coche', 'coche__cliente').all()
+    relaciones = CocheServicio.objects.select_related(
+        'servicio',
+        'coche',
+        'coche__cliente'
+    ).all()
     return render(request, 'lista_servicios.html', {'relaciones': relaciones})
 
 def detalle_cliente(request, cliente_id):
@@ -240,3 +244,56 @@ def eliminar_servicio(request, servicio_id):
         return JsonResponse({"message": "Servicio eliminado"})
 
     return JsonResponse({"error": "Método no permitido"}, status=405)
+
+def nuevo_cliente(request):
+    if request.method == 'POST':
+        form = ClienteForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_clientes')
+    else:
+        form = ClienteForm()
+    return render(request, 'nuevo_cliente.html', {'form': form, 'titulo': 'Nuevo Cliente'})
+def nuevo_coche(request):
+    if request.method == 'POST':
+        form = CocheForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_coches')
+    else:
+        form = CocheForm()
+    return render(request, 'nuevo_coche.html', {'form': form, 'titulo': 'Nuevo Coche'})
+
+def nuevo_servicio(request):
+    if request.method == 'POST':
+        nombre = request.POST.get('nombre')
+        descripcion = request.POST.get('descripcion')
+        coche_id = request.POST.get('coche')
+
+        if nombre and descripcion and coche_id:
+            coche = get_object_or_404(Coche, id=coche_id)
+
+            servicio = Servicio.objects.create(
+                nombre=nombre,
+                descripcion=descripcion
+            )
+
+            CocheServicio.objects.create(
+                coche=coche,
+                servicio=servicio
+            )
+
+            return redirect('lista_servicios')
+
+        coches = Coche.objects.select_related('cliente').all()
+        return render(request, 'nuevo_servicio.html', {
+            'titulo': 'Nuevo Servicio',
+            'coches': coches,
+            'error': 'Debes rellenar todos los campos.'
+        })
+
+    coches = Coche.objects.select_related('cliente').all()
+    return render(request, 'nuevo_servicio.html', {
+        'titulo': 'Nuevo Servicio',
+        'coches': coches
+    })

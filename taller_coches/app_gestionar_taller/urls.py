@@ -1,4 +1,6 @@
 from django.urls import path
+from django.urls import path
+from . import views
 from .views import (
     menu_principal,
     lista_clientes,
@@ -16,7 +18,11 @@ from .views import (
     eliminar_cliente,
     eliminar_coche,
     eliminar_servicio,
+    nuevo_cliente,
+    nuevo_coche,
+    nuevo_servicio
 )
+
 
 urlpatterns = [
     path('menu/', menu_principal, name='menu_principal'),
@@ -32,10 +38,17 @@ urlpatterns = [
     path('coches/registrar/', registrar_coche, name='registrar_coche'),
     path('coches/modificar/<int:coche_id>/', modificar_coche, name='modificar_coche'),
     path('coches/eliminar/<int:coche_id>/', eliminar_coche, name='eliminar_coche'),
+    path('coches/nuevo/', nuevo_coche, name='nuevo_coche'),  
 
     path('servicios/', lista_servicios, name='lista_servicios'),
     path('servicios/<int:servicio_id>/', detalle_servicio, name='detalle_servicio'),
     path('servicios/registrar/', registrar_servicio, name='registrar_servicio'),
     path('servicios/modificar/<int:servicio_id>/', modificar_servicio, name='modificar_servicio'),
     path('servicios/eliminar/<int:servicio_id>/', eliminar_servicio, name='eliminar_servicio'),
+
+    path('clientes/', lista_clientes, name='lista_clientes'),
+    path('clientes/<int:cliente_id>/', detalle_cliente, name='detalle_cliente'),
+    path('clientes/nuevo/', nuevo_cliente, name='nuevo_cliente'),  
+    path('coches/nuevo/', nuevo_coche, name='nuevo_coche'),
+    path('servicios/nuevo/', nuevo_servicio, name='nuevo_servicio'),
 ]
