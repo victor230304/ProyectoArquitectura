@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de servicios</title>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'menu_principal' %}" class="back-button">← Volver al menú</a>
+
+        <h1>Lista de servicios</h1>
+
+        {% if relaciones %}
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID servicio</th>
+                        <th>Nombre</th>
+                        <th>Descripción</th>
+                        <th>Coche</th>
+                        <th>Cliente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for relacion in relaciones %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'detalle_servicio' relacion.servicio.id %}">
+                                {{ relacion.servicio.id }}
+                            </a>
+                        </td>
+                        <td>{{ relacion.servicio.nombre }}</td>
+                        <td>{{ relacion.servicio.descripcion }}</td>
+                        <td>
+                            <a href="{% url 'detalle_coche' relacion.coche.id %}">
+                                {{ relacion.coche.marca }} {{ relacion.coche.modelo }} - {{ relacion.coche.matricula }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{% url 'detalle_cliente' relacion.coche.cliente.id %}">
+                                {{ relacion.coche.cliente.nombre }}
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+            <p class="empty-message">No hay servicios registrados en el taller.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

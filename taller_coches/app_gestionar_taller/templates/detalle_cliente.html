@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle del cliente</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #f4f7fb, #e9eef5);
+            color: #333;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 18px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            padding: 35px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 25px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #1f3c88, #2c5282);
+            color: white;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(31, 60, 136, 0.25);
+            transition: all 0.25s ease;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(135deg, #162d66, #1f3c88);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(31, 60, 136, 0.35);
+        }
+
+        .back-button:active {
+            transform: translateY(0);
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #1f3c88;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #e6ecf5;
+            padding-bottom: 10px;
+        }
+
+        .info {
+            background: #f8fafc;
+            border-left: 5px solid #1f3c88;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .info p {
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .info p:last-child {
+            margin-bottom: 0;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            color: #2c5282;
+            margin-bottom: 18px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #f9fbfd;
+            border: 1px solid #e2e8f0;
+            padding: 15px 18px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        li:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+        }
+
+        .empty-message {
+            background: #fff4e5;
+            color: #9a6700;
+            border: 1px solid #f5d08a;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        strong {
+            color: #1a202c;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 22px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            .info p,
+            li {
+                font-size: 0.95rem;
+            }
+
+            .back-button {
+                font-size: 0.9rem;
+                padding: 10px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'lista_clientes' %}" class="back-button">← Volver a clientes</a>
+        
+        <h1>{{ cliente.nombre }}</h1>
+
+        <div class="info">
+            <p><strong>Teléfono:</strong> {{ cliente.telefono }}</p>
+            <p><strong>Email:</strong> {{ cliente.email }}</p>
+        </div>
+
+        <h2>Coches registrados</h2>
+
+        {% if coches %}
+            <ul>
+                {% for coche in coches %}
+                <li>{{ coche.marca }} {{ coche.modelo }} — {{ coche.matricula }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="empty-message">Este cliente no tiene coches registrados en el taller.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

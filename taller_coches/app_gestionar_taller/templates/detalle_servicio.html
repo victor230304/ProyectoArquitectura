@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Detalle del servicio</title>
+</head>
+<body>
+    <div class="container">
+        <a href="{% url 'lista_servicios' %}" class="back-button">← Volver a servicios</a>
+
+        <h1>Detalle del servicio</h1>
+
+        <div class="info">
+            <p><strong>ID:</strong> {{ servicio.id }}</p>
+            <p><strong>Nombre:</strong> {{ servicio.nombre }}</p>
+            <p><strong>Descripción:</strong> {{ servicio.descripcion }}</p>
+        </div>
+
+        <h2>Coches asociados</h2>
+
+        {% if relaciones_coche %}
+            {% for relacion in relaciones_coche %}
+                <div class="info">
+                    <p><strong>Coche:</strong> {{ relacion.coche.marca }} {{ relacion.coche.modelo }}</p>
+                    <p><strong>Matrícula:</strong> {{ relacion.coche.matricula }}</p>
+                    <p><strong>Cliente:</strong> {{ relacion.coche.cliente.nombre }}</p>
+                    <p><strong>Teléfono:</strong> {{ relacion.coche.cliente.telefono }}</p>
+                    <p><strong>Email:</strong> {{ relacion.coche.cliente.email }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No hay coches asociados a este servicio.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

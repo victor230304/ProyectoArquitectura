@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Menú Taller de Coches</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #eef3f9, #dfe9f3);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: #ffffff;
+            border-radius: 22px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            padding: 40px;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .title h1 {
+            font-size: 2.2rem;
+            color: #1f3c88;
+            margin-bottom: 10px;
+        }
+
+        .title p {
+            color: #5b677a;
+            font-size: 1rem;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .menu-card {
+            display: block;
+            text-decoration: none;
+            background: #f8fbff;
+            border: 1px solid #dbe7f3;
+            border-radius: 18px;
+            padding: 24px;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+        }
+
+        .menu-card:hover {
+            transform: translateY(-4px);
+            background: #eef5ff;
+            box-shadow: 0 8px 20px rgba(31, 60, 136, 0.12);
+            border-color: #b8cdee;
+        }
+
+        .menu-card h2 {
+            font-size: 1.2rem;
+            color: #1f3c88;
+            margin-bottom: 10px;
+        }
+
+        .menu-card p {
+            color: #4a5568;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 25px;
+            }
+
+            .title h1 {
+                font-size: 1.8rem;
+            }
+
+            .menu-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="title">
+            <h1>Menú del Taller</h1>
+            <p>Accede rápidamente a las distintas secciones de gestión</p>
+        </div>
+
+        <div class="menu-grid">
+            <a href="{% url 'lista_clientes' %}" class="menu-card">
+                <h2>Lista de clientes</h2>
+                <p>Consulta todos los clientes registrados en el taller.</p>
+            </a>
+
+            <a href="{% url 'lista_coches' %}" class="menu-card">
+                <h2>Lista de coches</h2>
+                <p>Visualiza todos los vehículos registrados en el sistema.</p>
+            </a>
+
+            <a href="{% url 'lista_servicios' %}" class="menu-card">
+                <h2>Lista de servicios</h2>
+                <p>Consulta todos los servicios registrados en el taller.</p>
+            </a>
+
+        </div>
+    </div>
+</body>
+</html>

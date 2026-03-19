@@ -55,7 +55,7 @@ ROOT_URLCONF = "taller_coches.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / 'app_gestionar_taller/templates'],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
